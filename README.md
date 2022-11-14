@@ -1,5 +1,5 @@
 # toolkit
-go项目,目录快速创建工具
+快速创建项目目录
 
 ``` 
 git clone git@github.com:richingm/toolkit.git
