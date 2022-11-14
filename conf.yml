@@ -1,0 +1,147 @@
+# Modify this file as needed
+app: toolkit
+files:
+  - name: README.md
+    info:
+      - "# xxx服务"
+      - "xxx"
+dirs:
+  - name: /api
+    files:
+      - name: info.txt
+        info:
+          - "/api\n"
+          - "api协议定义目录,xxapi.proto protobuf文件, 以及生成的go文件。我们通常把api文档直接在proto文件中描述。"
+  - name: /assets
+    files:
+      - name: info.txt
+        info:
+          - "/assets\n"
+          - "与你的资源库配套的其他资产(图片、标识等)。"
+  - name: /build
+    files:
+      - name: info.txt
+        info:
+          - "/build\n\n"
+          - "打包和持续集成"
+          - "把你的云（AMI）、容器（Docker）、操作系统（deb、rpm、pkg）打包配置和脚本放在/build/package目录下。"
+          - "把你的CI（travis, circle, drone）配置和脚本放在/build/ci目录下。注意，一些 CI 工具（例如 Travis CI）对其配置文件的位置非常挑剔。试着把配置文件放在/build/ci目录下，在可能的情况下把它们链接到CI工具所期望的位置（如果不是这样，也不用担心，如果把这些文件放在根目录下会让你的生活更轻松:-)）。"
+  - name: /cmd
+    dirs:
+      - name: /gift
+        files:
+          - name: "main.go"
+            info:
+              - "package main\n"
+              - "import \"fmt\"\n"
+              - "func main() {"
+              - "  fmt.Println(\"hello world!\")"
+              - "}"
+    files:
+      - name: info.txt
+        info:
+          - "/cmd\n"
+          - "本项目的主干"
+          - "每个应用程序的目录名应该与你想要的可执行文件的名称相匹配(例如:/cmd/myapp)."
+          - "注意:不要在这个目录中放置太多代码，通常只有一个main.go文件就够了。"
+  - name: /configs
+    files:
+      - name: info.txt
+        info:
+          - "/configs\n"
+          - "配置文件模板或默认配置"
+  - name: /deployments
+    files:
+      - name: info.txt
+        info:
+          - "/deployments\n"
+          - "IaaS、PaaS、系统和容器协调部署配置和模板（docker-compose、kubernetes/helm、mesos、terraform、bosh）。"
+  - name: /docs
+    files:
+      - name: info.txt
+        info:
+          - "/docs\n"
+          - "设计和用户文档（除了godoc生成的文档)。"
+  - name: /examples
+    files:
+      - name: info.txt
+        info:
+          - "/examples\n"
+          - "为您的应用和/或公共库提供实例。"
+  - name: /githooks
+    files:
+      - name: info.txt
+        info:
+          - "/githooks\n"
+          - "Git 钩子."
+  - name: /init
+    files:
+      - name: info.txt
+        info:
+          - "/init\n"
+          - "系统启动（systemd, upstart, sysv）和进程管理器/监督器（runit, supervisord）配置。"
+  - name: /internal
+    dirs:
+      - name: /biz
+        files:
+          - name: info.txt
+            info:
+              - "/internal/biz\n"
+              - "业务逻辑的组装层, 类似DDD的domain层"
+      - name: /data
+        files:
+          - name: info.txt
+            info:
+              - "/internal/data\n"
+              - "业务数据访问, 包含cache, db等封装。"
+              - "data类似DDD的repo，repo接口在这里定义,使用依赖倒置的原则。"
+              - "我们可能会把data与dao混淆在一起,data偏重业务的含义，他所要做的是将领域对象重新拿出来,我们去掉了DDD的infra层。"
+      - name: /pkg
+        files:
+          - name: info.txt
+            info:
+              - "/internal/pkg\n"
+              - "内部应用程序可以使用的库代码"
+      - name: /service
+        files:
+          - name: info.txt
+            info:
+              - "/internal/service\n"
+              - "实现了api定义的服务层,类似DDD的application层,处理DTO到biz领域实体的转换(DTO->DO),同时协同各类biz交互,但是不应处理复杂逻辑。"
+    files:
+      - name: info.txt
+        info:
+          - "/internal\n"
+          - "私有应用程序和库代码。这是你不希望其他人在其应用程序或库中导入的代码。"
+  - name: /pkg
+    files:
+      - name: info.txt
+        info:
+          - "/pkg\n"
+          - "外部应用程序可以使用的库代码(例如:/pkg/publicly)。其他项目会导入这个库."
+  - name: /scripts
+    files:
+      - name: info.txt
+        info:
+          - "/scripts\n"
+          - "脚本用于执行各种构建、安装、分析等操作。"
+          - "这些脚本使根层的Makefile小而简单"
+  - name: /test
+    files:
+      - name: info.txt
+        info:
+          - "/test\n"
+          - "额外的外部测试应用程序和测试数据。你可以随时根据需求构造/test目录。有一个数据子目录是有意义的。"
+          - "例如可以使用/test/data。注意:Go会忽略以\".\"或\"_\"开头的目录或文件。"
+  - name: /third_party
+    files:
+      - name: info.txt
+        info:
+          - "/third_party\n"
+          - "外部辅助工具、分叉代码和其他第三方工具（例如，Swagger UI）。"
+  - name: /tools
+    files:
+      - name: info.txt
+        info:
+          - "/tools\n"
+          - "本项目的支持工具。注意，这些工具可以从/pkg和/internal目录中导入代码。"
