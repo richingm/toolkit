@@ -17,11 +17,11 @@ var (
 
 func checkFile() (string, string) {
 	var dstDir string
-	flag.StringVar(&dstDir, "d", "", "构建目录")
+	flag.StringVar(&dstDir, "d", "", "set build directory")
 	var config string
 	pwd, _ := os.Getwd()
 	file := fmt.Sprintf("%s/%s", pwd, "conf.yml")
-	flag.StringVar(&config, "c", file, "构建需要依赖的yaml文件")
+	flag.StringVar(&config, "c", file, "Build requires dependent yaml files")
 	flag.Parse()
 	if dstDir == "" {
 		panic("please set dst dir")
