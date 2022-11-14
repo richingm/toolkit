@@ -15,7 +15,7 @@ var (
 	TOOLKIT = "toolkit"
 )
 
-func checkParams() (string, string) {
+func checkFile() (string, string) {
 	var dstDir string
 	flag.StringVar(&dstDir, "d", "", "构建目录")
 	var config string
@@ -26,6 +26,7 @@ func checkParams() (string, string) {
 	if dstDir == "" {
 		panic("please set dst dir")
 	}
+	makeDir(dstDir)
 	if _, err := os.Stat(config); os.IsNotExist(err) {
 		panic(err)
 	}
@@ -33,7 +34,7 @@ func checkParams() (string, string) {
 }
 
 func main() {
-	dstDir, config := checkParams()
+	dstDir, config := checkFile()
 
 	// read file
 	yamlContext, err := ioutil.ReadFile(config)
@@ -57,13 +58,13 @@ func main() {
 	createFiles(dstDir, c.Files)
 
 	// 创建目录
-	createDirs(dstDir, c.Dirs)
+	makeDirs(dstDir, c.Dirs)
 
 	fmt.Println("Success")
 }
 
 // create dirs
-func createDirs(currentDir string, dirs []Dirs) {
+func makeDirs(currentDir string, dirs []Dirs) {
 	if len(dirs) == 0 {
 		return
 	}
@@ -71,18 +72,22 @@ func createDirs(currentDir string, dirs []Dirs) {
 		var build strings.Builder
 		build.WriteString(currentDir)
 		build.WriteString(dir.Name)
-		if _, err := os.Stat(build.String()); os.IsNotExist(err) {
-			err := os.Mkdir(build.String(), 0755)
-			if err != nil {
-				panic(err)
-			}
-			err = os.Chmod(build.String(), 0755)
-			if err != nil {
-				panic(err)
-			}
-		}
-		createDirs(build.String(), dir.Dirs)
+		makeDir(build.String())
+		makeDirs(build.String(), dir.Dirs)
 		createFiles(build.String(), dir.Files)
+	}
+}
+
+func makeDir(dstDir string) {
+	if _, err := os.Stat(dstDir); os.IsNotExist(err) {
+		err := os.Mkdir(dstDir, 0755)
+		if err != nil {
+			panic(err)
+		}
+		err = os.Chmod(dstDir, 0755)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
